@@ -1,44 +1,54 @@
-@import "../../common/less/common";
+@import '../../common/less/common.less';
+
+
+@listBgColor:#edfaff;
+
 .list-container{
-    .footer-btn-box{
-        text-align: center;
-        padding: 20px;
-    }
-    .search-box{
-        height: auto;
-    }
-}
-.shop-list{
-    overflow: auto;
-    padding:0 20px;
-    > li{
-        display: flex;
-        padding: 15px 0;
+    .result-list{
+        padding: 10px;
+        background-color: @listBgColor;
         .border-bottom();
-        cursor: pointer;
-    }
-    .img-box{
-        width: 90px;
-        height: 90px;
-        img{
-            .fit();
+        .border-top();
+        > li{
+            display: flex;
+            padding: 10px 0;
+            .border-top();
+            .flex-center();
+            &:first-child{
+                border-top-width: 0;
+            }
         }
-    }
-    .info-box{
-        flex: 1;
-        padding: 0 20px;
-        overflow: hidden;
-    }
-    p{
-        line-height: 30px;
-    }
-    .shop-title{
-        color: #333;
-        font-size: 14px;
-        font-weight: bold;
-    }
-    .shop-price{
-        color: red;
-        font-size: 14px;
+        .sort-num{
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            border-radius: 5px;
+            &.sort-num-1{
+                background-color: red;
+                color:#fff;
+            }
+            &.sort-num-2{
+                background-color: @color;
+                color:#fff;
+            }
+            &.sort-num-3{
+                background-color: orange;
+                color:#fff;
+            }
+        }
+        .img-box-fit{
+            width: 100px;
+            height: 120px;
+            margin: 0 10px;
+        }
+        .text-box{
+            flex: 1;
+            height: 120px;
+            overflow: hidden;
+        }
+        h3,p{
+            line-height: 26px;
+        }
     }
 }

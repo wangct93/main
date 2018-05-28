@@ -6,20 +6,19 @@ import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
-import Header from "../header/index";
 import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 
 const FormItem = Form.Item;
 
-import * as actions from '@/store/user/action';
 import Loading from '@/components/loading';
+
+import * as actions from '@/store/login/action';
 
 
 class LoginBox extends Component{
     render(){
         let {loadingLogin,alertInfo,login,clearAlerInfo,info,history} = this.props;
         return <div className="page-flex login-container">
-            <Header>登录</Header>
             <div className="body">
                 <Loading show={loadingLogin} message="登录中......"/>
                 <FormView login={login} />
@@ -108,4 +107,4 @@ class Box extends Component{
 
 const FormView = Form.create()(Box);
 
-export default connect((state) => state.userData,actions)(LoginBox)
+export default connect(state => state,actions)(LoginBox)

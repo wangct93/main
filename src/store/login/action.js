@@ -4,10 +4,8 @@
 
 
 
-
-export let inputShop = data => {
+export const login = () => {
     return {
-        type:'inputShop',
-        data
+        type:'login'
     }
 };

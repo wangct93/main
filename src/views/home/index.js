@@ -8,86 +8,91 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Input} from 'antd';
 
-import Header from '../header';
-import MenuList from './lib/menuList';
-import Box from './lib/box';
-
 import * as actions from '@/store/home/action';
+
+import Img from '@/components/img';
+
 
 const {Search} = Input;
 
 class Home extends Component{
     render(){
-        let {homeData,cityData} = this.props;
-        let {cityName} = cityData;
-        let {menuData = [],czyhData = []} = homeData;
-        if(!cityName){
-            return <Redirect to="/city"/>
-        }
-        return <div className="page-flex home-container">
-            <Header back={false}>
-                <Link to="/city" className="i-btn i-btn-right">
-                    <span>{cityName}</span>
-                    <Icon type="down"/>
+        let {nav = [],qt = []} = this.props;
+        return <div className="home-container">
+            <div className="header">
+                <Link to="/login">
+                    <Icon type="user" />
+                    <span>登录</span>
                 </Link>
-                <div className="search-box">
-                    <Search placeholder="输入关键词查询" onSearch={this.search.bind(this)}/>
-                </div>
-                <Link to="/login" className="user-box">
-                    <Icon type="user"/>
-                </Link>
-            </Header>
-            <div className="body">
-                <MenuBox click={this.click.bind(this)} data={menuData}/>
-                <div className="mgb25" />
-                <Box title="测试标题" data={czyhData} />
             </div>
+            <nav className="nav-box">
+                {
+                    nav.map((item,i) => {
+                        let {path,text} = item;
+                        return <Link key={i} to={path}>{text}</Link>
+                    })
+                }
+            </nav>
+            <div className="search-box">
+                <Search placeholder="请输入书名或作者姓名" enterButton/>
+            </div>
+            <ImgTextBox title="站长强推" data={qt} />
+            <HomeBox title="玄幻" data={qt} />
         </div>
-    }
-    search(value){
-        let {history} = this.props;
-        history.push('/list/all/' + value);
-    }
-    click(path){
-        let {history,clearShopList} = this.props;
-        clearShopList();
-        history.push('/list' + path);
     }
 }
 
-class MenuBox extends Component{
+
+class ImgTextBox extends Component{
     render(){
-        let {data,click} = this.props;
-        let contentList = [];
-        let roungList = [];
-        let {index = 0} = this.state || {};
-
-        data.forEach((item,i) => {
-            contentList.push(<MenuList click={click} data={item} key={i}/>);
-            roungList.push(<i className={index === i ? 'active' : ''} key={i} onClick={this.change.bind(this,i)}/>);
-        });
-        return <div className="menu-wrap" ref="box">
-            <div className="menu-content">
-                <div className="menu-move-box" style={{
-                    left: -index * this.width + 'px'
-                }}>
-                    {contentList}
-                </div>
-                </div>
-            <div className="menu-roung-box">{roungList}</div>
+        let {title,data = []} = this.props;
+        return <div className="img-text-box">
+            <div className="box-header">{title}</div>
+            <ul className="home-list img-text-list">
+                {
+                    data.map((item,i) => {
+                        let {id,imgSrc = 'img/1.jpg',name,author,intro} = item;
+                        return <li key={i}>
+                            <Link to={`/book/${id}`}>
+                                <div className="img-box-fit">
+                                    <Img src={imgSrc}/>
+                                </div>
+                                <div className="text-box">
+                                    <h3 className="text-name">{name}</h3>
+                                    <p className="text-author">作者：{author}</p>
+                                    <p className="text-intro">简介：{intro}</p>
+                                </div>
+                            </Link>
+                        </li>
+                    })
+                }
+            </ul>
         </div>
-    }
-    change(index){
-        this.setState({
-            index
-        });
-    }
-    componentDidMount(){
-        this.width = this.refs.box.offsetWidth;
     }
 }
 
-export default connect(state => ({
-    cityData:state.cityData,
-    homeData:state.homeData
-}),actions)(Home);
+class HomeBox extends Component{
+    render(){
+        let {title,data = []} = this.props;
+        return <div className="home-box">
+            <div className="box-header">{title}</div>
+            <ul className="home-list line-list">
+                {
+                    data.map((item,i) => {
+                        let {id,type = '奇幻玄幻',name,author,intro} = item;
+                        return <li key={i}>
+                            <Link to={`/book/${id}`}>
+                                <span className="text-type">[{type}]</span>
+                                <span className="text-name">{name}</span>
+                                <span className="text-author">{author}</span>
+                            </Link>
+                        </li>
+                    })
+                }
+            </ul>
+        </div>
+    }
+}
+
+
+export default connect(state => state.homeData,actions)(Home);

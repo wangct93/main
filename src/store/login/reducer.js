@@ -3,10 +3,9 @@
  */
 import {dispatch} from '../store';
 let defaultState = {
-
 };
 
-export let inputData = (state = defaultState,action = {}) => {
+export let loginData = (state = defaultState,action = {}) => {
     let func = reducer[action.type];
     if(typeof func === 'function'){
         state = wt.clone(state);

@@ -3,27 +3,17 @@
 @import "../util/static/css/common.css";
 @import "../common/less/common";
 
-.container{
-    background-color: @contanerColor;
-    display: flex;
-    flex-direction: column;
-}
-.page-flex{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    > .body{
-        flex: 1;
-        overflow-x:hidden;
-        overflow-y: auto;
-        position: relative;
-        z-index: 1;
-    }
+body{
+    font-size: 14px;
 }
 
-.block{
-    display: block;
+.search-box{
+    padding: 20px;
 }
+.paging-box{
+    padding: 10px;
+}
+
 /**
 加载中提示
  */

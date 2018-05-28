@@ -8,16 +8,18 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon} from 'antd';
 
-export default props => {
-    let {data = []} = props;
-    return <div className="footer">
-        <nav className="nav-box">
-            {
-                data.map((item,i) => {
-                    let {text,path} = item;
-                    return <NavLink key={i} to={path}>{text}</NavLink>;
-                })
-            }
-        </nav>
-    </div>
+export default class Header extends Component{
+    render(){
+        let {children = [],back = true,home = true} = this.props;
+        if(!wt.isArray(children)){
+            children = [children];
+        }
+        if(back){
+            children.push(<Icon key={children.length} onClick={() => {history.back()}} type="left"/>);
+        }
+        if(home){
+            children.push(<Link to="/home" key={children.length}><Icon type="home"/></Link>);
+        }
+        return <div className="header">{children}</div>
+    }
 }

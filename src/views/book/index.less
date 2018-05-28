@@ -1,0 +1,47 @@
+@import '../../common/less/common.less';
+
+@infoBgColor:#edfaff;
+
+.book-container{
+    .info-box{
+        display: flex;
+        padding: 10px;
+        background-color: @infoBgColor;
+        .img-box-fit{
+            width: 120px;
+            height: 160px;
+            flex:0 0 auto;
+        }
+        .text-box{
+            margin-left: 10px;
+        }
+        p,.score-line{
+            line-height: 30px;
+        }
+        .ant-rate{
+            vertical-align: -2px;
+        }
+    }
+    .text-intro{
+        padding: 20px;
+        min-height: 100px;
+    }
+
+    .list-header{
+        height: 40px;
+        line-height:40px;
+        padding-left:15px;
+        background-color: @infoBgColor;
+    }
+    .chapter-list{
+        > li{
+            height: 30px;
+            line-height: 30px;
+            padding-left: 15px;
+            .border-top();
+            &:first-child{
+                border-top-width: 0;
+            }
+        }
+    }
+}

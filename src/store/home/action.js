@@ -3,9 +3,3 @@
  */
 
 
-
-export const clearShopList = () => {
-    return {
-        type:'clearShopList'
-    }
-};
