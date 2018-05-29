@@ -1,10 +1,9 @@
-@import "~antd/dist/antd.css";
-@import "../ant/antd.less";
-@import "../util/static/css/common.css";
-@import "../common/less/common";
+
+@import "../util/less/common";
+@import "common";
 
 body{
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .search-box{
@@ -12,23 +11,4 @@ body{
 }
 .paging-box{
     padding: 10px;
-}
-
-/**
-加载中提示
- */
-.loading-box{
-    position: absolute;
-    background-color: rgba(0,0,0,.3);
-    display: flex;
-    z-index: 100;
-    .lt0();
-    .fit();
-    .flex-center();
-    .loading-message{
-        padding: 15px 10px 15px 50px;
-        font-size: 12px;
-        line-height: 20px;
-        background:#fff url('../util/static/img/loading.gif') 10px center no-repeat;
-    }
 }

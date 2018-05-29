@@ -1,4 +1,4 @@
-@import '../../common/less/common.less';
+@import '../../less/common.less';
 
 @infoBgColor:#edfaff;
 
@@ -7,7 +7,7 @@
         display: flex;
         padding: 10px;
         background-color: @infoBgColor;
-        .img-box-fit{
+        .img-box-full{
             width: 120px;
             height: 160px;
             flex:0 0 auto;
@@ -15,8 +15,12 @@
         .text-box{
             margin-left: 10px;
         }
-        p,.score-line{
+        p,
+        .score-line{
             line-height: 30px;
+        }
+        .btn-box{
+            margin-top: 5px;
         }
         .ant-rate{
             vertical-align: -2px;

@@ -10,7 +10,7 @@ import {Icon,Input} from 'antd';
 
 import * as actions from '@/store/home/action';
 
-import Img from '@/components/img';
+import Img from '@util/components/img';
 
 
 const {Search} = Input;

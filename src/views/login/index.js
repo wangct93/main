@@ -10,7 +10,7 @@ import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
 
 const FormItem = Form.Item;
 
-import Loading from '@/components/loading';
+import Loading from '@util/components/loading';
 
 import * as actions from '@/store/login/action';
 

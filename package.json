@@ -6,6 +6,7 @@
     "antd": "^3.4.5",
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
+    "path-to-regexp": "^2.2.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",

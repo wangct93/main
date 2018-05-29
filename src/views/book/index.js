@@ -9,8 +9,8 @@ import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-d
 import {Icon,Input,Pagination,Rate,Button} from 'antd';
 
 import Header from '../header';
-import Img from '@/components/img';
-import Loading from '@/components/loading';
+import Img from '@util/components/img';
+import Loading from '@util/components/loading';
 
 import * as actions from '@/store/book/action';
 import {renderTextHtml} from '@/computes/compute';
@@ -25,9 +25,7 @@ class Book extends Component{
             <Loading show={loading} />
             <Header>{name}</Header>
             <div className="info-box">
-                <div className="img-box-fit">
-                    <Img src={imgSrc}/>
-                </div>
+                <Img src={imgSrc}/>
                 <div className="text-box">
                     <p className="">作者：{author}</p>
                     <p className="">类型：{type}</p>

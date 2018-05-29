@@ -8,18 +8,17 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon} from 'antd';
 
-export default class Header extends Component{
+class Footer extends Component{
     render(){
-        let {children = [],back = true,home = true} = this.props;
-        if(!wt.isArray(children)){
-            children = [children];
-        }
-        if(back){
-            children.push(<Icon key={children.length} onClick={() => {history.back()}} type="left"/>);
-        }
-        if(home){
-            children.push(<Link to="/home" key={children.length}><Icon type="home"/></Link>);
-        }
-        return <div className="header">{children}</div>
+        console.log('footer');
+        return <div className="footer">
+            <p>&copy;wangct，all rights reserved</p>
+            <p>如有问题，请及时联系本人</p>
+        </div>
     }
 }
+
+export default connect(state => {
+    console.log('asd');
+    return {};
+})(Footer);
