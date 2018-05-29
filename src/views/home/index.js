@@ -19,7 +19,7 @@ class Home extends Component{
     render(){
         let {nav = [],qt = []} = this.props;
         return <div className="home-container">
-            <div className="header">
+            <div className="home-header">
                 <Link to="/login">
                     <Icon type="user" />
                     <span>登录</span>
@@ -54,9 +54,7 @@ class ImgTextBox extends Component{
                         let {id,imgSrc = 'img/1.jpg',name,author,intro} = item;
                         return <li key={i}>
                             <Link to={`/book/${id}`}>
-                                <div className="img-box-fit">
-                                    <Img src={imgSrc}/>
-                                </div>
+                                <Img src={imgSrc}/>
                                 <div className="text-box">
                                     <h3 className="text-name">{name}</h3>
                                     <p className="text-author">作者：{author}</p>

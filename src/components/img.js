@@ -3,16 +3,17 @@
  */
 import React, {Component} from 'react';
 const wt = require('@util');
+import {Spin} from 'antd';
 
 const queue = new wt.Queue({
     execFunc(item,cb){
-        let img = item.refs.img;
-        if(img){
-            let {src = ''} = item.props;
-            item.loadFunc = cb;
-            img.src = src;
-        }else{
+        if(item.unmount){
             cb();
+        }else{
+            item.finish = cb;
+            item.setState({
+                status:'start'
+            });
         }
     }
 });
@@ -20,7 +21,17 @@ const queue = new wt.Queue({
 
 export default class Img extends Component{
     render(){
-        return <img ref="img" onError={this.load.bind(this)} onLoad={this.load.bind(this)}/>
+        let {full = true,src = errorSrc} = this.props;
+        let {status} = this.state || {};
+        let loading = status !== 'finish';
+        return <Spin spinning={loading}>
+            <div className={`img-box-${full ? 'full' : 'auto'} pos-rel`}>
+                <img ref="img" src={status ? src : null} onError={this.load.bind(this)} onLoad={this.load.bind(this)}/>
+            </div>
+        </Spin>
+    }
+    componentWillUnmount(){
+        this.unmount = true;
     }
     componentDidMount(){
         queue.addItem(this);
@@ -30,9 +41,11 @@ export default class Img extends Component{
         this.refs.img.src = errorSrc;
     }
     load(){
-        wt.execFunc(this.loadFunc);
-        wt.execFunc(this.props.onLoad);
-        delete this.loadFunc;
+        this.finish();
+        this.setState({
+            status:'finish'
+        });
+        delete this.finish;
     }
 }
 
