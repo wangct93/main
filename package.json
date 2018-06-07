@@ -4,8 +4,12 @@
   "private": true,
   "dependencies": {
     "antd": "^3.4.5",
+    "cheerio": "^1.0.0-rc.2",
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.15.6",
     "less": "^3.0.2",
     "less-loader": "^4.1.0",
+    "mysql": "^2.15.0",
     "path-to-regexp": "^2.2.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",

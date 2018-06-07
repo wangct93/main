@@ -52,7 +52,11 @@ app.use(session({
 app.use('/',(req,res,next) => {
     console.log('请求地址：' + req.url);
     allowOrigin(req,res);
-    next();
+    if(req.url === '/'){
+        res.redirect(`http://${wt.getLocalIp()}:${config.port}/${config.index}`);
+    }else{
+        next();
+    }
 });
 
 app.use('/book',bookRouter);

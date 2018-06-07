@@ -3,9 +3,9 @@
  */
 
 export default {
-    getList:'http://localhost:8000/book/getList',
-    getInfo:'http://localhost:8000/book/getInfo',
-    getChapterList:'http://localhost:8000/book/getChapterList',
-    getInfoAndChapterList:'http://localhost:8000/book/getInfoAndChapterList',
-    getChapterInfo:'http://localhost:8000/book/getChapterInfo'
+    getList:'/book/getList',
+    getInfo:'/book/getInfo',
+    getChapterList:'/book/getChapterList',
+    getInfoAndChapterList:'/book/getInfoAndChapterList',
+    getChapterInfo:'/book/getChapterInfo'
 };

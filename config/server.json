@@ -1,8 +1,8 @@
 {
-  "index":"static/book/index.html",
+  "index":"build/index.html",
   "noSessionUrls":["/","/login"],
   "port":8000,
-  "staticName":"static",
+  "staticName":"build",
   "cryPtoKey":"wangct",
   "mysql":{
     "host":"localhost",
@@ -11,6 +11,6 @@
     "password":"123456",
     "database":"library"
   },
-  "allowAddress":["http://localhost:3000","http://172.16.66.14:3000"],
+  "allowAddress":false,
   "uploadDir":"public/img/upload"
 }
