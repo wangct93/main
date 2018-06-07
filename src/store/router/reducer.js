@@ -6,6 +6,7 @@ import Home from '../../views/home';
 import Login from '../../views/login';
 import List from '../../views/list';
 import Book from '../../views/book';
+import Chapter,{ChapterListView} from '../../views/chapter';
 let defaultState = {
     list:[
         {
@@ -17,12 +18,21 @@ let defaultState = {
             component:Login
         },
         {
-            path:'/search',
+            path:'/search/:keyword?',
             component:List
         },
         {
             path:'/book/:id',
             component:Book
+        },
+        {
+            path:'/chapterList/:id',
+            component:ChapterListView
+        },
+        {
+            path:'/chapter/:id',
+            component:Chapter,
+            footer:false
         }
     ]
 };

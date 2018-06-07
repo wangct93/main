@@ -3,3 +3,9 @@
  */
 
 
+export const search = params => {
+    return {
+        type:'searchBookList',
+        params
+    }
+}

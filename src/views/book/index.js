@@ -19,8 +19,8 @@ const {Search} = Input;
 
 class Book extends Component{
     render(){
-        let {info = {},loading,newlyChapterList = []} = this.props;
-        let {name,imgSrc,author,intro,type,score,state} = info;
+        let {info = {},loading,newlyChapterList = [],list = []} = this.props;
+        let {id,name,imgSrc,author,intro,type,score = 4.5,state} = info;
         return <div className="book-container">
             <Loading show={loading} />
             <Header>{name}</Header>
@@ -30,18 +30,23 @@ class Book extends Component{
                     <p className="">作者：{author}</p>
                     <p className="">类型：{type}</p>
                     <p className="">状态：{state ? '完结' : '连载中'}</p>
-                    <div className="score-line">评分：<Rate allowHalf value={score} count={5} /></div>
+                    <div className="score-line">评分：<Rate allowHalf value={score} /></div>
                     <div className="btn-box">
-                        <Button type="primary">开始阅读</Button>
+                        <Link to={`/chapter/${list.length ? list[0].id : ''}`}>
+                            <Button type="primary">开始阅读</Button>
+                        </Link>
+                        <Link to={`/chapterList/${id}`}>
+                            <Button type="primary">章节列表</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
-            <div className="text-intro">{renderTextHtml(intro)}</div>
+            <div className="text-intro" dangerouslySetInnerHTML={{__html:renderTextHtml(intro)}}/>
             <div className="list-header">
                 <span>最新章节</span>
                 <span>更新</span>
             </div>
-            <ChapterList data={newlyChapterList} />
+            <ChapterList data={list.slice(-10).reverse()} />
         </div>
     }
     componentWillMount(){
@@ -51,7 +56,7 @@ class Book extends Component{
 }
 
 
-class ChapterList extends Component{
+export class ChapterList extends Component{
     render(){
         let {data = []} = this.props;
         return <ul className="chapter-list">

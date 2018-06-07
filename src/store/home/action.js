@@ -3,3 +3,8 @@
  */
 
 
+export const loadData = type => {
+    return {
+        type:'get'+ type +'Data'
+    }
+};

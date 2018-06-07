@@ -23,6 +23,11 @@ export default class Header extends Component{
         return <div className="header">{children}</div>
     }
     back(){
-        history.back();
+        let {back} = this.props;
+        if(back){
+            location.hash = back;
+        }else{
+            history.back();
+        }
     }
 }

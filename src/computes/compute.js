@@ -5,7 +5,6 @@
 
 
 
-export const renderTextHtml = text => {
-    // text = text.replace(/^\s*(<br>)*\s*|\s*(<br>)*\s*$/g,'').replace(/\s*<br>\s*/g,'</p><p>');
-    return text;
+export const renderTextHtml = (text = '') => {
+    return '<p>' + text.replace(/^\s*\n*\s*|\s*\n*\s*$/g,'').replace(/[\s\n]+/g,'</p><p>') + '</p>';
 };

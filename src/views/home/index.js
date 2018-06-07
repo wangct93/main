@@ -17,7 +17,7 @@ const {Search} = Input;
 
 class Home extends Component{
     render(){
-        let {nav = [],qt = []} = this.props;
+        let {nav = [],hotData = [],xhData = [],dsData = []} = this.props;
         return <div className="home-container">
             <div className="home-header">
                 <Link to="/login">
@@ -34,11 +34,21 @@ class Home extends Component{
                 }
             </nav>
             <div className="search-box">
-                <Search placeholder="请输入书名或作者姓名" enterButton/>
+                <Search onSearch={this.search.bind(this)} placeholder="请输入书名或作者姓名" enterButton/>
             </div>
-            <ImgTextBox title="站长强推" data={qt} />
-            <HomeBox title="玄幻" data={qt} />
+            <ImgTextBox title="站长强推" data={hotData} />
+            <HomeBox title="玄幻" data={xhData} />
+            <HomeBox title="都市" data={dsData} />
         </div>
+    }
+    componentDidMount(){
+        let {loadData} = this.props;
+        ['Hot','XH','DS'].forEach(item => {
+            loadData(item);
+        });
+    }
+    search(value){
+        location.hash = '/search/' + value;
     }
 }
 

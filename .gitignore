@@ -6,7 +6,7 @@
 
 # testing
 /coverage
-
+/config/cloud.json
 # production
 #/build
 # misc
