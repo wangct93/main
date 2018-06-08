@@ -10,7 +10,8 @@ const iconv = require('iconv-lite');
 const url = require('url');
 const fs = require('fs');
 const request = require('request');
-
+const path = require('path');
+const outPath = path.resolve(__dirname,'temp/a.html');
 
 const Lingdian = {
     host:'http://www.00ksw.org',
@@ -20,12 +21,12 @@ const Lingdian = {
             if(err){
                 cb('');
             }else{
+                // fs.writeFile(outPath,body);
                 cb(this.parseInfoHtml(body,remoteAddr));
             }
         });
     },
-    parseInfoHtml(data,remoteAddr){
-        let html = iconv.decode(data,'gbk');
+    parseInfoHtml(html,remoteAddr){
         let $ = cheerio.load(html);
         let $top = $('.ymdz');
         let $info = $('.introduce');
@@ -35,7 +36,7 @@ const Lingdian = {
             let state = $info.find('.bq').children().eq(2).text().split('：')[1] === '完结' ? 1 : 0;
             let type = $top.text().split('>')[1].trim();
             let intro = $info.find('.jj').text();
-            let fmUrl = this.host + $info.prev().find('img').attr('src');
+            let fmUrl = $info.prev().find('img').attr('src');
             let list = [];
             $('.ml_list li').each(function(i,li){
                 let $a = $(li).find('a');
@@ -47,13 +48,13 @@ const Lingdian = {
                 }
             });
             return {
-                name:name,
-                author:author,
-                type:type,
-                intro:intro,
-                list:list,
-                fmUrl:fmUrl,
-                state:state
+                name,
+                author,
+                type,
+                intro,
+                list,
+                fmUrl,
+                state
             };
         }
     },

@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-import Urls from '../paths';
+import {getInfoAndChapterList} from '../../ajax/book';
 let defaultState = {
 
 };
@@ -19,19 +19,11 @@ export let bookData = (state = defaultState,action = {}) => {
 let reducer = {
     loadBookInfo(state,action){
         state.loading = true;
-        let {id} = action;
-        $.ajax({
-            url:Urls.getInfoAndChapterList,
-            type:'post',
-            data:{
-                id
-            },
-            success(data){
-                dispatch({
-                    type:'loadBookInfoEnd',
-                    data
-                });
-            }
+        getInfoAndChapterList({id:action.id},data => {
+            dispatch({
+                type:'loadBookInfoEnd',
+                data
+            });
         });
     },
     loadBookInfoEnd(state,action){

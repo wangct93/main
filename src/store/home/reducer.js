@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-import Urls from '../paths';
+import {getList} from '../../ajax/book';
 
 let defaultState = {
     nav:[
@@ -120,17 +120,4 @@ let reducer = {
             loadingDS:false
         });
     }
-};
-
-
-const getList = (params,cb) => {
-    $.ajax({
-        url:Urls.getList,
-        type:'post',
-        data:params,
-        success:cb,
-        error(){
-            cb()
-        }
-    });
 };

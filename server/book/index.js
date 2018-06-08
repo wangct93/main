@@ -110,13 +110,16 @@ function getChapterInfo(chapterId,cb,eb){
 }
 
 const getWhereSql = params => {
-    let {keyword,type} = params;
+    let {keyword,type,state} = params;
     let result = [];
     if(keyword){
         result.push(`name like "%${keyword}%"`);
     }
     if(type){
         result.push(`type like "%${type}%"`);
+    }
+    if(state){
+        result.push(`state = ${state}`);
     }
     return result.length ? 'where ' + result.join(' and ') : '';
 };

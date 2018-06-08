@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
-import Urls from '../paths';
+import {getInfo,getChapterList,getChapterInfo} from '../../ajax/book';
 let defaultState = {
 
 };
@@ -19,17 +19,13 @@ export let chapterData = (state = defaultState,action = {}) => {
 let reducer = {
     chapterListLoadBookInfo(state,action){
         state.loadingInfo = true;
-        $.ajax({
-            url:Urls.getInfo,
-            type:'post',
-            data:action.params,
-            success(data){
-                dispatch({
-                    type:'chapterListLoadBookInfoEnd',
-                    data
-                });
-            }
+        getInfo(action.params,data => {
+            dispatch({
+                type:'chapterListLoadBookInfoEnd',
+                data
+            });
         });
+
     },
     chapterListLoadBookInfoEnd(state,action){
         wt.extend(state,{
@@ -39,16 +35,11 @@ let reducer = {
     },
     loadChapterList(state,action){
         state.loadingChapterList = true;
-        $.ajax({
-            url:Urls.getChapterList,
-            type:'post',
-            data:action.params,
-            success(data){
-                dispatch({
-                    type:'loadChapterListEnd',
-                    data
-                });
-            }
+        getChapterList(action.params,data => {
+            dispatch({
+                type:'loadChapterListEnd',
+                data
+            });
         });
     },
     loadChapterListEnd(state,action){
@@ -57,7 +48,7 @@ let reducer = {
     },
     loadChapterInfo(state,action){
         state.loadingChapterInfo = true;
-        ajaxChapter(action.id,data => {
+        getChapterInfo({id:action.id},data => {
             dispatch({
                 type:'loadChapterInfoEnd',
                 data
@@ -74,17 +65,4 @@ let reducer = {
             data:[]
         });
     }
-};
-
-
-const ajaxChapter = (id,cb) => {
-    $.ajax({
-        url:Urls.getChapterInfo,
-        type:'post',
-        data:{id},
-        success:cb,
-        error(){
-            cb();
-        }
-    });
 };
