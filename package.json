@@ -14,7 +14,7 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "wt-butil": "^1.0.0",
-    "wt-sutil": "^1.0.5"
+    "wt-sutil": "^1.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
