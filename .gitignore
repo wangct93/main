@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 .idea
-
+sqlLog
 # testing
 /coverage
 /config/cloud.json

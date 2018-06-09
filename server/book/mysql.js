@@ -2,53 +2,51 @@
  * Created by Administrator on 2017/12/13.
  */
 
-var wt = require('wt-sutil');
-var mysql = wt.mysql;
-
-var fs = require('fs');
+let wt = require('wt-sutil');
+const {mysql} = wt;
+let fs = require('fs');
 
 
 module.exports = {
-    insertBooks:insertBooks,
-    insertChapters:insertChapters
+    insertBooks,
+    insertChapters
 };
 
 
 
 function insertBooks(books,cb,eb){
-    if(!wt.isArray(books)){
-        books = [books];
-    }
-    var temp = [];
-    var time = new Date().toFormatString();
-    books.forEach(function(book){
+    let time = new Date().toFormatString();
+    inset('book(name,author,type,intro,state,imgSrc,imgCloudKey,time,ldId)',books,book => {
         errFilter(book);
-        temp.push('("'+ book.name +'","'+ book.author +'","'+ book.type +'","'+ book.intro +'","'+ book.fmImg +'","'+ time +'",'+ book.state +')');
-    });
-    var sql = 'insert into book(name,author,type,intro,fmImg,time,state) values' + temp.join(',');
-    mysql.query(sql,cb,eb);
+        let {name = '',author = '',type = '',intro = '',imgSrc = '',state = 0,imgCloudKey = '',ldId} = book;
+        return `('${name}','${author}','${type}','${intro}',${state},'${imgSrc}','${imgCloudKey}','${time}',${ldId})`;
+    },cb,eb);
 }
 
 
 function insertChapters(chapters,cb,eb){
-    if(!wt.isArray(chapters)){
-        chapters = [chapters];
-    }
-    var temp = [];
-    var time = new Date().toFormatString();
-    chapters.forEach(function(chapter){
+    let time = new Date().toFormatString();
+    inset('chapter(name,url,bookId,time,cindex)',chapters,chapter => {
         errFilter(chapter);
-        temp.push('("'+ chapter.name +'","'+ chapter.url +'","'+ chapter.bookId +'","'+ time +'",'+ chapter.index +')');
-    });
-    var sql = 'insert into chapter(name,url,bookId,time,chapterIndex) values' + temp.join(',');
-    mysql.query(sql,cb,eb);
+        let {name,url,bookId,index} = chapter;
+        return `('${name}','${url}',${bookId},'${time}',${index})`;
+    },cb,eb);
 }
 
-
 function errFilter(data){
-    for(var name in data){
+    for(let name in data){
         if(data.hasOwnProperty(name) && wt.isString(data[name])){
             data[name] = data[name].replace(/"/g,'“');
         }
     }
+}
+
+
+
+function inset(sql,data,formatFunc,cb,eb){
+    if(!wt.isArray(data)){
+        data = [data];
+    }
+    let insertDataStr = data.map(formatFunc).join(',');
+    mysql.query(`insert into ${sql} values ${insertDataStr}`,cb,eb);
 }

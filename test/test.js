@@ -32,3 +32,6 @@ const decipher = crypto.createDecipher(type,pwd);
 let decrypted = decipher.update(jmStr, 'hex', 'utf8');
 decrypted += decipher.final('utf8');
 console.log(decrypted);
+
+
+console.log(process.cwd());
