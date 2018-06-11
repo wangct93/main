@@ -16,17 +16,17 @@ module.exports = {
 
 function insertBooks(books,cb,eb){
     let time = new Date().toFormatString();
-    inset('book(name,author,type,intro,state,imgSrc,imgCloudKey,time,ldId)',books,book => {
+    inset('book(name,author,type,intro,state,imgSrc,imgCloudKey,time,ldId,imgUrl)',books,book => {
         errFilter(book);
-        let {name = '',author = '',type = '',intro = '',imgSrc = '',state = 0,imgCloudKey = '',ldId} = book;
-        return `('${name}','${author}','${type}','${intro}',${state},'${imgSrc}','${imgCloudKey}','${time}',${ldId})`;
+        let {name = '',author = '',type = '',intro = '',imgSrc = '',state = 0,imgCloudKey = '',ldId,fmUrl} = book;
+        return `('${name}','${author}','${type}','${intro}',${state},'${imgSrc}','${imgCloudKey}','${time}',${ldId},'${fmUrl}')`;
     },cb,eb);
 }
 
 
 function insertChapters(chapters,cb,eb){
     let time = new Date().toFormatString();
-    inset('chapter(name,url,bookId,time,cindex)',chapters,chapter => {
+    inset('chapter(name,url,bookId,time,cIndex)',chapters,chapter => {
         errFilter(chapter);
         let {name,url,bookId,index} = chapter;
         return `('${name}','${url}',${bookId},'${time}',${index})`;

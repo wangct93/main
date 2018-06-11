@@ -17,10 +17,20 @@ const Lingdian = {
     host:'http://www.00ksw.org',
     getInfo(num,cb){
         let remoteAddr = this.host + '/html/' + Math.floor(num / 1000) +'/' + num + '/';
-        request(remoteAddr).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
+        console.log('           发起请求：' + num);
+        request({
+            url:remoteAddr,
+            timeout:60000
+        }).on('error',(err => {
+            console.log(err);
+            console.log('           请求失败：' + num);
+            cb();
+        })).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
             if(err){
-                cb('');
+                console.log('           请求失败：' + num);
+                cb();
             }else{
+                console.log('           请求成功：' + num);
                 // fs.writeFile(outPath,body);
                 cb(this.parseInfoHtml(body,remoteAddr));
             }
@@ -59,7 +69,10 @@ const Lingdian = {
         }
     },
     getText(remoteAddr,cb){
-        request(remoteAddr).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
+        request(remoteAddr).on('error',(err => {
+            console.log(err);
+            cb();
+        })).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
             if(err){
                 console.log(err);
                 cb('');

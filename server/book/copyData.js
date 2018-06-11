@@ -32,7 +32,8 @@ function start(){
             getItem(){
                 return num++;
             },
-            execFunc
+            execFunc,
+            limit:1
         });
         queue.start();
     },err => {
@@ -44,16 +45,18 @@ function start(){
 
 
 function execFunc(num,cb){
-    console.log('下载编号：' + num);
+    console.log('开始下载：' + num);
     ld.getInfo(num,book =>{
+        console.log('           获取书籍信息成功：' + num);
         if(book){
             book.ldId = num;
-            book.imgCloudKey = 'book/' + crypto.encrypt(book.name);
+            book.imgCloudKey = crypto.encrypt(book.name);
             tempList.push(book);
             if(tempList.length >= insertLen){
                 let books = tempList.slice(0);
                 tempList = [];
                 bookMysql.insertBooks(books,data => {
+                    console.log('           插入书籍信息成功：' + num);
                     let bookId = data.insertId;
                     let imgList = [];
                     let chapterList = [];
@@ -66,42 +69,33 @@ function execFunc(num,cb){
                         });
                         imgList.push(book);
                     });
-                    let chPro = new Promise((cb,eb) => {
-                        let insertLen = 100;
-                        let queue = new wt.Queue({
-                            list:chapterList,
-                            getItem(){
-                                let result = this.list.splice(0,insertLen);
-                                return result.length ? result : undefined;
-                            },
-                            execFunc(chapterList,cb){
-                                bookMysql.insertChapters(chapterList,cb,cb);
-                            },
-                            success:cb
-                        });
-                        queue.start();
+                    let insertLen = 100;
+                    let queue = new wt.Queue({
+                        list:chapterList,
+                        getItem(){
+                            let result = this.list.splice(0,insertLen);
+                            return result.length ? result : undefined;
+                        },
+                        execFunc(chapterList,cb){
+                            bookMysql.insertChapters(chapterList,cb,cb);
+                        },
+                        success(data){
+                            console.log('           插入章节信息成功：' + num);
+                            cb();
+                        }
                     });
-                    let imgPro = new Promise((cb,eb) => {
-                        let queue = new wt.Queue({
-                            list:imgList,
-                            execFunc({imgCloudKey,fmUrl},cb){
-                                cloud.putFile({
-                                    Key:imgCloudKey,
-                                    Body:request(fmUrl)
-                                },cb);
-                            },
-                            success:cb
-                        });
-                        queue.start();
-                    });
-                    Promise.all([chPro,imgPro]).then(data => {
-                        cb();
-                        books = imgPro = chPro = chapterList = imgList = null;
-                    });
+                    queue.start();
                 },cb);
             }
+        }else{
+            cb();
         }
-        cb();
     });
 }
+
+
+
+
+
+
 
