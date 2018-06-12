@@ -8,6 +8,12 @@ const bqg = require('./biquge');
 const ld = require('./lingdian');
 const cloudConfig = require('../../config/cloud.json');
 cloud.setUserInfo(wt.clone(cloudConfig,['SecretId','SecretKey']));
+
+let {Cache} = wt;
+let cache = new Cache({
+    limit:1000
+});
+
 module.exports = {
     getToal,        //获取小说列表
     getInfo,        //获取小说信息
@@ -16,6 +22,8 @@ module.exports = {
     getChapterList,
     getChapterListTotal
 };
+
+
 function getToal(params,cb,eb){
     mysql.query(`select count(id) total from book ${getWhereSql(params)}`,data => {
         cb(data[0].total);
@@ -67,19 +75,28 @@ function getChapterInfo(chapterId,cb,eb){
             });
             let p3 = new Promise((cb,eb) => {
                 if(cloudKey){
-                    cloud.getFile({
-                        Key:cloudKey
-                    },(err,data) => {
-                        if(err){
-                            eb()
-                        }else{
-                            cb(data.Body.toString());
-                        }
-                    });
+                    let data = cache.getItem(cloudKey);
+                    if(data){
+                        console.log('从缓存中读取！');
+                        cb(data.text);
+                    }else{
+                        cloud.getFile({
+                            Key:cloudKey
+                        },(err,data) => {
+                            if(err){
+                                eb()
+                            }else{
+                                let text = data.Body.toString();
+                                cb(text);
+                                cache.add({id:cloudKey,text});
+                            }
+                        });
+                    }
                 }else{
                     ld.getText(url,data => {
                         cb(data);
                         let Key = 'chapter/' + crypto.encrypt(name + '_' + bookId + '_' + chapterIndex);
+                        cache.add({id:Key,text:data});
                         cloud.putFile({
                             Key,
                             Body:data

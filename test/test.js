@@ -2,36 +2,42 @@
  * Created by Administrator on 2018/6/7.
  */
 
-// const wt = require('wt-sutil');
-// const {cloud} = wt;
-// cloud.setUserInfo({
-//     SecretId:'AKIDLZcq7ISryvhJl1rC3iCUaUDrOSybol4C',
-//     SecretKey:'44sX1LZcVJxWvwra8ZptlRvHyYyDgy99'
+
+const wt = require('wt-sutil');
+const request = require('request');
+const cheerio = require('cheerio');
+const iconv = require('iconv-lite');
+const fs = require('fs');
+
+let url = 'http://www.00ksw.org/html/0/529/212488.html';
+
+function test(url,cb){
+    request(url).on('error',cb).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
+        if(err){
+            cb(err);
+        }else{
+            cb(null,parseTextHtml(body));
+        }
+    });
+}
+
+const parseTextHtml = html => {
+    let $ = cheerio.load(html);
+    let $content = $('#articlecontent');
+    return $content.length ? $content.text() : '';
+};
+
+// test(url,(err,data) => {
+//     if(err){
+//         console.log(err);
+//     }else{
+//         fs.writeFile('test/1.txt',data,(err,data) => {
+//             console.log(err,data);
+//         });
+//         fs.writeFile('test/2.txt',data.replace(/^[\s\n]+|[\s\n]+$/g,'').replace(/[\s\n]+/g,'\n'),(err,data) => {
+//             console.log(err,data);
+//         });
+//     }
 // });
 
-const fs = require('fs');
-const crypto = require('crypto');
-const filePath = './test/a.txt';
-const string = 'some clear text data';
-const pwd = 'a password';
-const type = 'aes192';
-
-let cip = crypto.createCipher(type,pwd);
-let jmStr = cip.update(string, 'utf8', 'hex');
-jmStr += cip.final('hex');
-
-fs.writeFile(filePath,jmStr,(err,data) => {
-    console.log(err);
-    console.log(111);
-    console.log(data);
-});
-
-
-
-const decipher = crypto.createDecipher(type,pwd);
-let decrypted = decipher.update(jmStr, 'hex', 'utf8');
-decrypted += decipher.final('utf8');
-console.log(decrypted);
-
-
-console.log(process.cwd());
+let {Cache} = wt;

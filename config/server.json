@@ -11,6 +11,6 @@
     "password":"123456",
     "database":"library"
   },
-  "allowAddress":false,
+  "allowAddress":["http://localhost:3000"],
   "uploadDir":"public/img/upload"
 }

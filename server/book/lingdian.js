@@ -75,7 +75,7 @@ const Lingdian = {
         })).pipe(iconv.decodeStream('gbk')).collect((err,body) => {
             if(err){
                 console.log(err);
-                cb('');
+                cb();
             }else{
                 cb(this.parseTextHtml(body,remoteAddr));
             }
