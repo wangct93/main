@@ -4,4 +4,4 @@
 
 1、npm run server
 
-2、访问http://localhost:8000即可
+2、访问 http://localhost:8000 即可
