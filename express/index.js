@@ -67,14 +67,16 @@ app.get('/favicon.ico',(req,res) => {
     res.send(null);
 });
 
-app.listen(port,() =>{
+app.listen(port,'0.0.0.0',() =>{
     console.log('the server is started on port '+ port +'!');
 });
 
 
 function allowOrigin(req,res){
     let {allowAddress = '*'} = config;
-    if(allowAddress){
+    if(wt.getClientIp(req) === '127.0.0.1'){
+        res.set('Access-Control-Allow-Origin','*');
+    }else if(allowAddress){
         if(!wt.isArray(allowAddress)){
             allowAddress = [allowAddress];
         }

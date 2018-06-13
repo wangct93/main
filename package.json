@@ -27,6 +27,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "book": "node server/book/copyData",
-    "img": "node server/book/loadImgUrl"
+    "img": "node server/book/loadImgUrl",
+    "server": "node express"
   }
 }
