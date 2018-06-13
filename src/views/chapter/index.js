@@ -7,10 +7,10 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Input,Pagination,Rate,Button} from 'antd';
+import wt,{$} from 'wt-butil';
 
 import Header from '../header';
-import Img from '@util/components/img';
-import Loading from '@util/components/loading';
+import {Loading} from 'wt-reacts';
 
 import * as actions from '@/store/chapter/action';
 import {renderTextHtml} from '@/computes/compute';
@@ -112,7 +112,6 @@ class ChapterDetail extends Component{
     }
     componentDidMount(){
         let {container,moreBox} = this.refs;
-        let {$} = wt;
         $(container).bind('scroll',e => {
             let {loadingChapterInfo,data = [],history} = this.props;
             let {nextChapterId} = data[data.length - 1] || {};

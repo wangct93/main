@@ -7,10 +7,9 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Input,Pagination,Rate,Button} from 'antd';
+import {Img,Loading} from 'wt-reacts';
 
 import Header from '../header';
-import Img from '@util/components/img';
-import Loading from '@util/components/loading';
 
 import * as actions from '@/store/book/action';
 import {renderTextHtml} from '@/computes/compute';

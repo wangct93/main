@@ -4,6 +4,7 @@
 const express = require('express');
 
 const router = express.Router();
+const config = require('../config/server.json');
 module.exports = router;
 const Book = require('../server/book');
 const wt = require('wt-sutil');
@@ -19,6 +20,8 @@ router.post('/getList',(req,res) => {
         Book.getList(body,cb,eb);
     });
     Promise.all([tPro,listPro]).then(result =>{
+        let list = result[1];
+        list.forEach(setImgSrc);
         res.send({
             total:result[0],
             list:result[1]
@@ -32,6 +35,7 @@ router.post('/getList',(req,res) => {
 router.post('/getInfo',(req,res) => {
     let {id} = req.body;
     Book.getInfo(id,data => {
+        setImgSrc(data);
         res.send(data);
     },err => {
         console.log(err);
@@ -67,8 +71,10 @@ router.post('/getInfoAndChapterList',(req,res) => {
         Book.getChapterList(body,cb,eb);
     });
     Promise.all([infoPro,listPro]).then(result =>{
+        let info = result[0];
+        setImgSrc(info);
         res.send({
-            info:result[0],
+            info,
             list:result[1]
         });
     },err => {
@@ -87,3 +93,10 @@ router.post('/getChapterInfo',(req,res) => {
 });
 
 
+const setImgSrc = (book = {}) => {
+    let {name,imgSrc} = book;
+    if(!imgSrc){
+        imgSrc = wt.crypto.encrypt(name);
+    }
+    book.imgSrc = `http://${wt.getLocalIp()}:${config.port}/cloud/getFile?key=book/${imgSrc}`;
+};

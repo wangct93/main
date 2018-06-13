@@ -8,14 +8,14 @@ import {HashRouter,withRouter,Route} from 'react-router-dom';
 import PathToRegexp from 'path-to-regexp';
 
 import {BackTop} from 'antd';
+import {SwitchRouter} from 'wt-reacts';
 
-import RouterSwitch from '@util/components/routerSwitch';
 import Footer from '../views/footer';
 
 export default connect(state => state.routerData)(({list}) => {
     return <HashRouter>
         <React.Fragment>
-            <RouterSwitch data={list} />
+            <SwitchRouter data={list} />
             <BackTop visibilityHeight={200} target={() => $('#container')[0]}/>
             <FooterView data={list} />
         </React.Fragment>

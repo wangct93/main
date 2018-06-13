@@ -9,7 +9,7 @@ import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-d
 import {Icon,Input,Pagination} from 'antd';
 
 import Header from '../header';
-import Img from '@util/components/img';
+import {Img} from 'wt-reacts';
 
 import * as actions from '@/store/list/action';
 

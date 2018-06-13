@@ -15,6 +15,7 @@ const app = express();
 const port = config.port || 8888;
 
 const bookRouter = require('../router/book');
+const cloudRouter = require('../router/cloud_tx');
 
 
 /**
@@ -60,6 +61,7 @@ app.use('/',(req,res,next) => {
 });
 
 app.use('/book',bookRouter);
+app.use('/cloud',cloudRouter);
 
 app.get('/favicon.ico',(req,res) => {
     res.send(null);

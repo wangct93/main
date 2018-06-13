@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {createStore,combineReducers} from 'redux';
-const wt = require('@util/browse');
+import wt from 'wt-butil';
 import * as router from './router/reducer';
 import * as home from './home/reducer';
 import * as list from './list/reducer';
