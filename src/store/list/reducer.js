@@ -3,6 +3,7 @@
  */
 import {dispatch} from '../store';
 import {getList} from '../../ajax/book';
+import LangCn from '@/json/langCn.json';
 let defaultState = {
 };
 
@@ -16,19 +17,44 @@ export let listData = (state = defaultState,action = {}) => {
 };
 
 let reducer = {
-    searchBookList(state,action){
-        state.loadingSearch = true;
-        getList(action.params,data => {
+    loadBookList(state,action){
+        state.loading = true;
+        let {type,start,limit,keyword} = action.params;
+        let params;
+        switch(type){
+            case 'finish':
+                params = {
+                    state:1
+                };
+                break;
+            case 'search':
+                params = {
+                    keyword
+                };
+                break;
+            default:
+                if(LangCn[type]){
+                    params = {
+                        type:LangCn[type]
+                    };
+                }
+        }
+        getList(wt.extend({
+            start,
+            limit,
+            sortField:'zanHits',
+            sortDesc:true
+        },params),data => {
             dispatch({
-                type:'searchBookListEnd',
+                type:'loadBookListEnd',
                 data
             });
         })
     },
-    searchBookListEnd(state,action){
+    loadBookListEnd(state,action){
         let {data} = action;
         wt.extend(state,{
-            loadingSearch:false,
+            loading:false,
             data:data.list,
             total:data.total
         });

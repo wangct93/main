@@ -10,24 +10,30 @@ import {Icon,Input,Pagination} from 'antd';
 
 import Header from '../header';
 import {Img} from 'wt-reacts';
+import wt from 'wt-butil';
 
 import * as actions from '@/store/list/action';
+
+import LangCn from '@/json/langCn.json';
+import {parseUrl,stringifyUrl} from '../../computes/compute';
 
 const {Search} = Input;
 
 class View extends Component{
     render(){
-        let {total = 0,data = []} = this.props;
-        let {pageNum = 1,pageSize = 10,keyword} = this.state || {};
+        let {total = 0,data = [],match} = this.props;
+        let {keyword,pageNum = 1,type,pageSize = 10} = this.state || {};
         return <div className="list-container">
-            <Header>搜索结果</Header>
-            <div className="search-box">
-                <Search value={keyword} onChange={this.searchChange.bind(this)} onSearch={this.searchEvent}/>
-            </div>
+            <Header>{LangCn[type]}</Header>
+            {
+                type === 'search' ? <div className="search-box">
+                    <Search value={keyword} onChange={this.searchChange.bind(this)} onSearch={this.searchEvent.bind(this)}/>
+                </div> : ''
+            }
             <ul className="result-list">
                 {
                     data.map((item,i) => {
-                        let {id,imgSrc,name,author,type,intro,state,newlyName,newlyId} = item;
+                        let {imgSrc,name,author,type,intro,state,newlyName,newlyId} = item;
                         let orderNum = (pageNum - 1) * pageSize + i + 1;
                         return <li key={i} onClick={this.toBook.bind(this,item)}>
                             <div className={`sort-num sort-num-${orderNum}`}>{orderNum}</div>
@@ -43,36 +49,39 @@ class View extends Component{
                 }
             </ul>
             <div className="paging-box">
-                <Pagination onChange={this.pageChange.bind(this)} simple current={pageNum} total={total}/>
+                <Pagination pageSize={pageSize} onChange={this.pageChange.bind(this)} simple current={+pageNum} total={+total}/>
             </div>
         </div>
     }
     componentWillUpdate(props){
-        let {keyword} = props.match.params;
-        if(keyword !== this.props.match.params.keyword){
-            this.search({
-                pageNum:1,
-                keyword
-            });
+        let newParams = parseUrl(props.match.params.paramsStr);
+        let oldParams = parseUrl(this.props.match.params.paramsStr);
+        if(!wt.equal(newParams,oldParams)){
+            this.loadBookList(newParams);
         }
     }
     componentWillMount(){
-        this.pageChange(1);
+        this.loadBookList(parseUrl(this.props.match.params.paramsStr));
     }
-    pageChange(pageNum,pageSize = 10){
-        this.search({
-            pageSize,
+    loadBookList(params){
+        let {type,pg:pageNum = 1,keyword,size:pageSize = 10} = params;
+        this.setState({
+            type,
+            keyword,
             pageNum,
-            keyword:this.props.match.params.keyword
+            pageSize
         });
-    }
-    search(params){
-        let {pageNum,pageSize = 10} = params;
-        this.props.search(wt.extend(params,{
+        this.props.load({
+            type,
+            keyword,
             start:(pageNum - 1) * pageSize,
             limit:pageSize
-        }));
-        this.setState(params);
+        });
+    }
+    pageChange(pageNum,pageSize){
+        this.changeUrl({
+            pg:pageNum
+        });
     }
     toBook(book){
         let {history} = this.props;
@@ -88,9 +97,16 @@ class View extends Component{
             keyword:v.target.value
         });
     }
-
     searchEvent(value){
-        location.hash = '/search/' + value;
+        this.changeUrl({
+            keyword:value,
+            pg:1
+        });
+    }
+    changeUrl(params){
+        let {match,history} = this.props;
+        let urlParams = wt.extend(parseUrl(match.params.paramsStr),params);
+        history.push('/list/' + stringifyUrl(urlParams));
     }
 }
 

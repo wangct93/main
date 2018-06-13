@@ -34,8 +34,8 @@ class Home extends Component{
                 <Search onSearch={this.search.bind(this)} placeholder="请输入书名或作者姓名" enterButton/>
             </div>
             <ImgTextBox title="站长强推" data={hotData} />
-            <HomeBox title="玄幻" data={xhData} />
-            <HomeBox title="都市" data={dsData} />
+            <HomeBox title="玄幻" moreHref="/list/type=xh" data={xhData} />
+            <HomeBox title="都市" moreHref="/list/type=ds" data={dsData} />
         </div>
     }
     componentDidMount(){
@@ -45,7 +45,7 @@ class Home extends Component{
         });
     }
     search(value){
-        location.hash = '/search/' + value;
+        this.props.history.push('/list/type=search&keyword=' + value);
     }
 }
 
@@ -78,9 +78,12 @@ class ImgTextBox extends Component{
 
 class HomeBox extends Component{
     render(){
-        let {title,data = []} = this.props;
+        let {title,data = [],moreHref = ''} = this.props;
         return <div className="home-box">
-            <div className="box-header">{title}</div>
+            <div className="box-header">
+                {title}
+                <Link to={moreHref} className="fr more-text">更多</Link>
+            </div>
             <ul className="home-list line-list">
                 {
                     data.map((item,i) => {

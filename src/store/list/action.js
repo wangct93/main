@@ -3,9 +3,9 @@
  */
 
 
-export const search = params => {
+export const load = params => {
     return {
-        type:'searchBookList',
+        type:'loadBookList',
         params
     }
-}
+};

@@ -18,7 +18,7 @@ let defaultState = {
             component:Login
         },
         {
-            path:'/search/:keyword?',
+            path:'/list/:paramsStr',
             component:List
         },
         {

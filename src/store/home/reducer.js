@@ -3,47 +3,31 @@
  */
 import {dispatch} from '../store';
 import {getList} from '../../ajax/book';
+import LangCn from '@/json/langCn.json';
+
+
 
 let defaultState = {
     nav:[
         {
-            text:'排行',
-            path:'/rank'
+            text:LangCn.rank,
+            path:'/list/type=rank'
         },
         {
-            text:'分类',
-            path:'/classify'
+            text:LangCn.finish,
+            path:'/list/type=finish'
         },
         {
-            text:'完本',
-            path:'/finish'
+            text:LangCn.xh,
+            path:'/list/type=xh'
+        },
+        {
+            text:LangCn.ds,
+            path:'/list/type=ds'
         },
         {
             text:'书架',
             path:'/myBook'
-        }
-    ],
-    qt:[
-        {
-            id:1,
-            imgSrc:undefined,
-            name:'测试书名1',
-            author:'测试作者1',
-            intro:'测试简介1'
-        },
-        {
-            id:2,
-            imgSrc:undefined,
-            name:'测试书名2',
-            author:'测试作者2',
-            intro:'测试简介2'
-        },
-        {
-            id:3,
-            imgSrc:undefined,
-            name:'测试书名3',
-            author:'测试作者3',
-            intro:'测试简介3'
         }
     ]
 };
