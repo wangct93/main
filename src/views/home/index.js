@@ -8,7 +8,6 @@ import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Input} from 'antd';
 import {Img} from 'wt-reacts';
-
 import * as actions from '@/store/home/action';
 const {Search} = Input;
 

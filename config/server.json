@@ -2,7 +2,7 @@
   "index":"build/index.html",
   "noSessionUrls":["/","/login"],
   "port":8000,
-  "staticName":"build",
+  "staticDir":"build",
   "cryPtoKey":"wangct",
   "mysql":{
     "host":"localhost",
@@ -11,6 +11,7 @@
     "password":"123456",
     "database":"library"
   },
-  "allowAddress":["http://localhost:3000"],
-  "uploadDir":"public/img/upload"
+  "allowAddress":["http://localhost:3000","http://172.16.66.14:3000"],
+  "uploadDir":"public/img/upload",
+  "html":"static/index.html"
 }

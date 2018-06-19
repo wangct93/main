@@ -2,74 +2,70 @@
  * Created by Administrator on 2018/1/3.
  */
 
+
+
+
 const express = require('express');
+const wt = require('wt-sutil');
+const app = express();
+const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const path = require('path');
 const session = require('express-session');
 const config = require('./config');
-const wt = require('wt-sutil');
-
-
-const app = express();
-const port = config.port || 8888;
+let {port} = config;
 
 const bookRouter = require('../router/book');
 const cloudRouter = require('../router/cloud_tx');
 
-
-/**
- * 设置模版引擎
- */
-app.set('views',path.resolve(__dirname,'../templates/ejs'));
-app.set('view engine','ejs');
-
-/**
- * 静态资源处理
- * @type {*|Array}
- */
-let staticName = config.staticName || [];
-if(!wt.isArray(staticName)){
-    staticName = [staticName];
-}
-staticName.forEach(name => {
-    app.use('/' + name,express.static(name));
-});
-app.use(cookieParser());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(session({
-    secret:'wangct',
-    name:'ssid',
-    cookie:{
-        maxAge:6000,
-        secret:true
-    },
-    resave:false,
-    saveUninitialized:true
-}));
-
-/***********************/
-app.use('/',(req,res,next) => {
-    console.log('请求地址：' + req.url);
-    allowOrigin(req,res);
-    if(req.url === '/'){
-        res.redirect(`http://${wt.getLocalIp()}:${config.port}/${config.index}`);
-    }else{
-        next();
-    }
-});
+setAppOption();
 
 app.use('/book',bookRouter);
 app.use('/cloud',cloudRouter);
 
-app.get('/favicon.ico',(req,res) => {
-    res.send(null);
+app.listen(port,'0.0.0.0',() => {
+    console.log('the server is started on port ' + port + '!');
 });
 
-app.listen(port,'0.0.0.0',() =>{
-    console.log('the server is started on port '+ port +'!');
-});
+
+function setAppOption(){
+    let {staticDir,html} = config;
+    if(!wt.isArray(staticDir)){
+        staticDir = [staticDir];
+    }
+    staticDir.forEach(item => {
+        app.use('/static',express.static(path.resolve(__dirname,'..',item)));
+    });
+    app.use(cookieParser());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(session({
+        secret:'wangct',
+        name:'ssid',
+        cookie:{
+            maxAge:6000,
+            secret:true
+        },
+        resave:false,
+        saveUninitialized:true
+    }));
+    app.use('/',(req,res,next) => {
+        console.log('请求地址：' + req.url);
+        allowOrigin(req,res);
+        if(req.url === '/'){
+            res.redirect(`http://${wt.getServerIp()}:${config.port}/${html}`);
+        }else{
+            next();
+        }
+    });
+    app.get('/favicon.ico',(req,res) => {
+        res.send(null);
+    });
+    app.set('views',path.resolve(__dirname,'../templates/ejs'));
+    app.set('view engine','ejs');
+}
+
+
 
 
 function allowOrigin(req,res){

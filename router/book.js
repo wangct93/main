@@ -1,13 +1,14 @@
 /**
  * Created by Administrator on 2018/6/5.
  */
-const express = require('express');
-
-const router = express.Router();
-const config = require('../config/server.json');
-module.exports = router;
-const Book = require('../server/book');
 const wt = require('wt-sutil');
+const express = require('express');
+const router = express.Router();
+const config = require('../express/config');
+const Book = require('../server/book');
+
+module.exports = router;
+
 
 
 
@@ -98,5 +99,5 @@ const setImgSrc = (book = {}) => {
     if(!imgSrc){
         imgSrc = wt.crypto.encrypt(name);
     }
-    book.imgSrc = `http://${wt.getLocalIp()}:${config.port}/cloud/getFile?key=book/${imgSrc}`;
+    book.imgSrc = `http://${wt.getServerIp()}:${config.port}/cloud/getFile?key=book/${imgSrc}`;
 };
