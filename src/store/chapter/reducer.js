@@ -3,6 +3,7 @@
  */
 import {dispatch} from '../store';
 import {getInfo,getChapterList,getChapterInfo} from '../../ajax/book';
+import wt from 'wt-butil';
 let defaultState = {
 
 };

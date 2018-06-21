@@ -4,7 +4,7 @@
 import {dispatch} from '../store';
 import {getList} from '../../ajax/book';
 import LangCn from '@/json/langCn.json';
-
+import wt from 'wt-butil';
 
 
 let defaultState = {

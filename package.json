@@ -18,9 +18,10 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
-    "wt-butil": "^1.0.16",
-    "wt-reacts": "^3.1.12",
-    "wt-sutil": "^1.0.22"
+    "wt-butil": "^1.0.20",
+    "wt-reacts": "^3.1.13",
+    "wt-sutil": "^1.0.23",
+    "wt-util": "^1.3.5"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -7,6 +7,7 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon} from 'antd';
+import wt from 'wt-butil';
 
 export default class Header extends Component{
     render(){

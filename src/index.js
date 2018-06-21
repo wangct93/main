@@ -3,9 +3,9 @@ import React,{Component} from 'react';
 import ReactDOM,{render} from 'react-dom';
 import store from './store/store';
 import {Provider} from 'react-redux';
+import wt from 'wt-butil';
 
 import RouterIndex from './routers';
-
 
 
 /**

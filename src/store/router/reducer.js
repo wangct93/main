@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import wt from 'wt-butil';
 import Home from '../../views/home';
 import Login from '../../views/login';
 import List from '../../views/list';

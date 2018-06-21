@@ -2,6 +2,7 @@
  * Created by Administrator on 2018/3/7.
  */
 import {dispatch} from '../store';
+import wt from 'wt-butil';
 import {getList} from '../../ajax/book';
 import LangCn from '@/json/langCn.json';
 let defaultState = {
