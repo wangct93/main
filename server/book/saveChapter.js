@@ -13,23 +13,30 @@ mysql.setConfig({
     database:'book'
 });
 
+
+const numPath = path.resolve(__dirname,'temp/num.txt');
+
 start();
 
 
 
 function start(){
-    mysql.query('select max(id) num from chapter where cloudKey is not null',data => {
-        let {num = 0} = data[0] || {};
-        let queue = new wt.Queue({
-            getItem(){
-                return ++num;
-            },
-            execFunc:save,
-            interval:1000,
-            limit:5
-        });
-        queue.start();
-    })
+    fs.readFile(numPath,(err,data) => {
+        if(err){
+            console.log(err);
+        }else{
+            let num = +data.toString();
+            let queue = new wt.Queue({
+                getItem(){
+                    return ++num;
+                },
+                execFunc:save,
+                interval:1000,
+                limit:3
+            });
+            queue.start();
+        }
+    });
 }
 
 function save(id,cb){
@@ -59,7 +66,7 @@ function save(id,cb){
                             }else{
                                 mysql.query(`update chapter set cloudKey = '${key}' where id = ${id}`,data => {
                                     console.log('                     cloudKey设置成功:' + id);
-                                    cb();
+                                    fs.writeFile(numPath,id,cb);
                                 },err => {
                                     console.log('                     cloudKey设置失败:' + id);
                                     console.log(err.message);
