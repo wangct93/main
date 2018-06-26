@@ -6,7 +6,7 @@
 sqlLog
 # testing
 /coverage
-/config/cloud.json
+/config
 # production
 #/build
 # misc

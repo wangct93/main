@@ -13,10 +13,14 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const config = require('./config');
+const mysqlConfig = require('../config/mysql.json');
 let {port} = config;
 
 const bookRouter = require('../router/book');
 const cloudRouter = require('../router/cloud_tx');
+
+const {mysql} = wt;
+mysql.setConfig(mysqlConfig);
 
 setAppOption();
 
@@ -53,7 +57,7 @@ function setAppOption(){
         console.log('请求地址：' + req.url);
         allowOrigin(req,res);
         if(req.url === '/'){
-            res.redirect(`http://${wt.getServerIp()}:${config.port}/${html}`);
+            res.redirect(`http://${req.headers.host}/${html}`);
         }else{
             next();
         }
@@ -70,15 +74,17 @@ function setAppOption(){
 
 function allowOrigin(req,res){
     let {allowAddress = '*'} = config;
-    if(wt.getClientIp(req) === '127.0.0.1'){
+    let clientIp = wt.getClientIp(req);
+    if(clientIp === '127.0.0.1'){
         res.set('Access-Control-Allow-Origin','*');
     }else if(allowAddress){
         if(!wt.isArray(allowAddress)){
             allowAddress = [allowAddress];
         }
-        let cAddr = req.headers.origin;
-        if(allowAddress[0] === '*' || allowAddress.indexOf(cAddr) !== -1){
-            res.set('Access-Control-Allow-Origin',cAddr);
+        console.log(clientIp);
+        console.log(req);
+        if(allowAddress.indexOf(clientIp) !== -1){
+            res.set('Access-Control-Allow-Origin',clientIp);
         }
     }
 }

@@ -6,6 +6,9 @@ import {Provider} from 'react-redux';
 import wt from 'wt-butil';
 
 import RouterIndex from './routers';
+import {Img} from 'wt-reacts';
+
+Img.setErrorSrc('/static/img/blank.jpg');
 
 
 /**

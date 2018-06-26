@@ -10,7 +10,7 @@ import {Icon} from 'antd';
 
 export default props => {
     return <div className="footer">
-        <p>&copy;wangct，all rights reserved</p>
-        <p>如有问题，请及时联系本人</p>
+        <p>&copy;2018 wangct，all rights reserved</p>
+        <p>如有问题，请及时联系本人（邮箱：826688959@qq.com）</p>
     </div>
 }

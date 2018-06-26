@@ -22,7 +22,10 @@ router.post('/getList',(req,res) => {
     });
     Promise.all([tPro,listPro]).then(result =>{
         let list = result[1];
-        list.forEach(setImgSrc);
+        let host = req.headers.host;
+        list.forEach(item => {
+            setImgSrc(item,host);
+        });
         res.send({
             total:result[0],
             list:result[1]
@@ -36,7 +39,7 @@ router.post('/getList',(req,res) => {
 router.post('/getInfo',(req,res) => {
     let {id} = req.body;
     Book.getInfo(id,data => {
-        setImgSrc(data);
+        setImgSrc(data,req.headers.host);
         res.send(data);
     },err => {
         console.log(err);
@@ -73,7 +76,7 @@ router.post('/getInfoAndChapterList',(req,res) => {
     });
     Promise.all([infoPro,listPro]).then(result =>{
         let info = result[0];
-        setImgSrc(info);
+        setImgSrc(info,req.headers.host);
         res.send({
             info,
             list:result[1]
@@ -94,10 +97,10 @@ router.post('/getChapterInfo',(req,res) => {
 });
 
 
-const setImgSrc = (book = {}) => {
+const setImgSrc = (book = {},host) => {
     let {name,imgSrc} = book;
     if(!imgSrc){
         imgSrc = wt.crypto.encrypt(name);
     }
-    book.imgSrc = `http://${wt.getServerIp()}:${config.port}/cloud/getFile?key=book/${imgSrc}`;
+    book.imgSrc = `http://${host}/cloud/getFile?key=book/${imgSrc}`;
 };
