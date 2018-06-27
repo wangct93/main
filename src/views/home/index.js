@@ -7,6 +7,7 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Icon,Input} from 'antd';
+import Footer from '../footer';
 import {Img} from 'wt-reacts';
 import * as actions from '@/store/home/action';
 const {Search} = Input;
@@ -35,6 +36,7 @@ class Home extends Component{
             <ImgTextBox title="站长强推" data={hotData} />
             <HomeBox title="玄幻" moreHref="/list/type=xh" data={xhData} />
             <HomeBox title="都市" moreHref="/list/type=ds" data={dsData} />
+            <Footer />
         </div>
     }
     componentDidMount(){

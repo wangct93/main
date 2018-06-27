@@ -81,8 +81,6 @@ function allowOrigin(req,res){
         if(!wt.isArray(allowAddress)){
             allowAddress = [allowAddress];
         }
-        console.log(clientIp);
-        console.log(req);
         if(allowAddress.indexOf(clientIp) !== -1){
             res.set('Access-Control-Allow-Origin',clientIp);
         }

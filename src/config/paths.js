@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2018/6/6.
  */
-// let basePath = 'http://localhost:8000';
+// let basePath = 'http://172.16.66.14:8000';
 let basePath = '';
 export default {
     bookList:basePath + '/book/getList',

@@ -1,5 +1,15 @@
 @import "../less/common";
 
 .container{
-    overflow: auto;
+    overflow-y: auto;
+}
+
+.page-flex{
+    display: flex;
+    flex-flow:column;
+    .fit();
+    min-height: 400px;
+    .body{
+        flex:1;
+    }
 }

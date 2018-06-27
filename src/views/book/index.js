@@ -5,16 +5,19 @@ import './index.less';
 import React, {Component} from 'react';
 import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
-import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
+import {HashRouter, NavLink, Switch, Route, Redirect, Link,withRouter} from 'react-router-dom';
 import {Icon,Input,Pagination,Rate,Button} from 'antd';
 import {Img,Loading} from 'wt-reacts';
 
 import Header from '../header';
+import Footer from '../footer';
 
 import * as actions from '@/store/book/action';
 import {renderTextHtml} from '@/computes/compute';
 
 const {Search} = Input;
+
+
 
 class Book extends Component{
     render(){
@@ -46,6 +49,7 @@ class Book extends Component{
                 <span>更新</span>
             </div>
             <ChapterList data={list.slice(-10).reverse()} />
+            <Footer />
         </div>
     }
     componentWillMount(){

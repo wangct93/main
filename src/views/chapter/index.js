@@ -10,6 +10,7 @@ import {Icon,Input,Pagination,Rate,Button} from 'antd';
 import wt,{$} from 'wt-butil';
 
 import Header from '../header';
+import Footer from '../footer';
 import {Loading} from 'wt-reacts';
 
 import * as actions from '@/store/chapter/action';
@@ -30,6 +31,7 @@ class ChapterListPage extends Component{
             <Header>{name}</Header>
             <ChapterList data={list} />
             <Pagination onChange={this.pageChange.bind(this)} pageSize={pageSize} simple current={pageNum} total={total}/>
+            <Footer />
         </div>
     }
     componentWillUpdate(props){

@@ -7,7 +7,8 @@ import ReactDOM, {render} from 'react-dom';
 import {Provider, connect} from 'react-redux';
 import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-dom';
 import {Form,Input,Icon,Button,Checkbox,Modal} from 'antd';
-
+import Header from '../header';
+import Footer from '../footer';
 const FormItem = Form.Item;
 
 import {Loading} from 'wt-reacts';
@@ -19,6 +20,7 @@ class LoginBox extends Component{
     render(){
         let {loadingLogin,alertInfo,login,clearAlerInfo,info,history} = this.props;
         return <div className="page-flex login-container">
+            <Header >用户登录</Header>
             <div className="body">
                 <Loading show={loadingLogin} message="登录中......"/>
                 <FormView login={login} />
@@ -26,6 +28,7 @@ class LoginBox extends Component{
                     clearAlerInfo();
                 }}>确定</Button>}>{alertInfo}</Modal>
             </div>
+            <Footer />
         </div>
     }
 }

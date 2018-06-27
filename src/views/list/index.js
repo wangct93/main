@@ -9,6 +9,7 @@ import {HashRouter, NavLink, Switch, Route, Redirect, Link} from 'react-router-d
 import {Icon,Input,Pagination} from 'antd';
 
 import Header from '../header';
+import Footer from '../footer';
 import {Img} from 'wt-reacts';
 import wt from 'wt-butil';
 
@@ -51,6 +52,7 @@ class View extends Component{
             <div className="paging-box">
                 <Pagination pageSize={pageSize} onChange={this.pageChange.bind(this)} simple current={+pageNum} total={+total}/>
             </div>
+            <Footer />
         </div>
     }
     componentWillUpdate(props){
