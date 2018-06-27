@@ -1,7 +1,7 @@
 {
   "index":"build/index.html",
   "noSessionUrls":["/","/login"],
-  "port":8000,
+  "port":80,
   "staticDir":"build",
   "cryPtoKey":"wangct",
   "allowAddress":["http://localhost:3000","http://172.16.66.14:3000"],
