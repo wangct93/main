@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2018/6/6.
  */
-// let basePath = 'http://172.16.66.14:8000';
 let basePath = '';
+basePath = 'http://172.16.66.14:8000';
 export default {
     bookList:basePath + '/book/getList',
     bookInfo:basePath + '/book/getInfo',

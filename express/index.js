@@ -75,14 +75,10 @@ function setAppOption(){
 function allowOrigin(req,res){
     let {allowAddress = '*'} = config;
     let clientIp = wt.getClientIp(req);
-    if(clientIp === '127.0.0.1'){
+    if(!wt.isArray(allowAddress)){
+        allowAddress = [allowAddress];
+    }
+    if(clientIp === '127.0.0.1' || allowAddress.indexOf(clientIp) !== -1){
         res.set('Access-Control-Allow-Origin','*');
-    }else if(allowAddress){
-        if(!wt.isArray(allowAddress)){
-            allowAddress = [allowAddress];
-        }
-        if(allowAddress.indexOf(clientIp) !== -1){
-            res.set('Access-Control-Allow-Origin',clientIp);
-        }
     }
 }

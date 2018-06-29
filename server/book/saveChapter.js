@@ -6,12 +6,11 @@ const fs = require('fs');
 const ld = require('./lingdian');
 const path = require('path');
 const cloudConfig = require('../../config/cloud.json');
+const mysqlConfig = require('../../config/mysql.json');
 const request = require('request');
 const {cloud,mysql,crypto} = wt;
 cloud.setUserInfo(cloudConfig);
-mysql.setConfig({
-    database:'book'
-});
+mysql.setConfig(mysqlConfig);
 
 
 const numPath = path.resolve(__dirname,'temp/num.txt');
@@ -32,7 +31,7 @@ function start(){
                 },
                 execFunc:save,
                 interval:1000,
-                limit:3
+                limit:5
             });
             queue.start();
         }
